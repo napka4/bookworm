@@ -39,10 +39,5 @@
     "eslint-plugin-react": "^7.3.0",
     "prettier": "^1.6.1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "proxy": "http://localhost:8080"
 }
