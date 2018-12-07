@@ -6,7 +6,7 @@ import * as actions from "../../actions/auth";
 
 const HomePage = ({ isAuthenticated, logout }) => (
   <div>
-    <h1>Home Page</h1>
+    <h1>Mon application de Bibliothèque</h1>
     {isAuthenticated ? (
       <button onClick={() => logout()}>Logout</button>
     ) : (
