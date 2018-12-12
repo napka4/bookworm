@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import decode from 'jwt-decode';
 import { userLoggedIn } from './actions/auth';
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 //import de semantic ui
@@ -23,7 +24,11 @@ const store = createStore(
 
 if(localStorage.bookwormJWT) {
     const payload = decode(localStorage.bookwormJWT);
-    const user = { token: localStorage.bookwormJWT, email: payload.email, confirmed: payload.confirmed };
+    const user = { 
+        token: localStorage.bookwormJWT, 
+        email: payload.email, 
+        confirmed: payload.confirmed };
+    setAuthorizationHeader(localStorage.bookwormJWT);
     store.dispatch(userLoggedIn(user));
 };
 

@@ -1,5 +1,7 @@
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../types';
 import api from '../api';
+import setAuthorization from '../utils/setAuthorizationHeader';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 
 export const userLoggedIn = user => ({
     type: USER_LOGGED_IN,
@@ -13,11 +15,13 @@ export const userLoggedOut = () => ({
 export const login = credentials => dispatch => 
 api.user.login(credentials).then(user => {
     localStorage.bookwormJWT = user.token;
+    setAuthorization(user.token);
     dispatch(userLoggedIn(user));
 });
 
 export const logout = () => dispatch => {
 localStorage.removeItem('bookwormJWT');
+setAuthorizationHeader();
 dispatch(userLoggedOut());  
 };
 
@@ -32,3 +36,5 @@ api.user.resetPasswordRequest(email);
 
 export const validateToken = token => () =>
 api.user.validateToken(token);
+
+export const resetPassword = data => () => api.user.resetPassword(data);
