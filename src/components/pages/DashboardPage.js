@@ -4,13 +4,30 @@ import { connect } from "react-redux";
 import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
 import { allBooksSelector } from '../../reducers/books';
 import AddBookCta from '../ctas/AddBookCta';
+import MobileContainer from "../navigation/MobileContainer";
+import DesktopContainer from "../navigation/DesktopContainer";
+import { fetchBooks } from "../../actions/books";
 
-const DashboardPage = ({ isConfirmed, books }) => (
-  <div>{!isConfirmed && <ConfirmEmailMessage />}
-  
-  { books.length === 0 && <AddBookCta />}
-  </div>
-);
+class DashboardPage extends React.Component {
+
+  componentDidMount = () => this.onInit(this.props);
+
+  onInit = props => props.fetchBooks();
+
+  render() {
+    const { isConfirmed, books } = this.props;
+    return(
+      <div>
+      {!isConfirmed && <ConfirmEmailMessage />}
+        <MobileContainer />
+        <DesktopContainer />
+    
+      { books.length === 0 && <AddBookCta />}
+      </div>
+    )
+  }
+
+} 
 
 DashboardPage.propTypes = {
   isConfirmed: PropTypes.bool.isRequired,
@@ -26,4 +43,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(DashboardPage);
+export default connect(mapStateToProps, { fetchBooks })(DashboardPage);

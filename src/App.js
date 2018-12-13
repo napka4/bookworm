@@ -11,12 +11,13 @@ import SignupPage from './components/pages/SignupPage';
 import ConfirmationPage from './components/pages/ConfirmationPage';
 import ForgotPasswordPage from './components/pages/ForgotPasswordPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
-import TopNavigation from './components/navigation/TopNavigation';
 import NewBookPage from './components/pages/NewBookPage';
+import DesktopContainer from './components/navigation/DesktopContainer';
+import MobileContainer from './components/navigation/MobileContainer';
 
 const App = ({ location, isAuthenticated }) => (
 <div className="ui container">
-{isAuthenticated && <TopNavigation />}
+{isAuthenticated && <DesktopContainer /> && <MobileContainer />}
   <Route location={location} path="/" exact component={Homepage} />
   <Route location={location} path="/confirmation/:token" exact component={ConfirmationPage} />
   <GuestRoute location={location} path="/login" exact component={LoginPage} />

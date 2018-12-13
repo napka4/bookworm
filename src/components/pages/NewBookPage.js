@@ -1,3 +1,4 @@
+
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -5,7 +6,7 @@ import { Segment } from "semantic-ui-react";
 import axios from "axios";
 import SearchBookForm from "../forms/SearchBookForm";
 import BookForm from "../forms/BookForm";
-// import { createBook } from "../../actions/books";
+import { createBook } from "../../actions/books";
 
 class NewBookPage extends React.Component {
   state = {
@@ -46,4 +47,4 @@ NewBookPage.propTypes = {
   }).isRequired
 };
 
-export default connect(null, {})(NewBookPage);
+export default connect(null, { createBook })(NewBookPage);

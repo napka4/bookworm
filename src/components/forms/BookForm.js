@@ -137,7 +137,7 @@ class BookForm extends React.Component {
             </Grid.Row>
 
             <Grid.Row>
-              <Button primary>Save</Button>
+              <Button primary>Sauvegarder dans ma bibliothèque</Button>
             </Grid.Row>
           </Grid>
         </Form>
