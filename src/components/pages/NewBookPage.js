@@ -1,4 +1,3 @@
-
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -29,7 +28,7 @@ class NewBookPage extends React.Component {
   render() {
     return (
       <Segment>
-        <h1>Add new book to your collection</h1>
+        <h1>Ajouter un livre à votre collection</h1>
         <SearchBookForm onBookSelect={this.onBookSelect} />
 
         {this.state.book && (

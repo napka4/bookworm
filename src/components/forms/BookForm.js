@@ -87,12 +87,12 @@ class BookForm extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <Form.Field error={!!errors.title}>
-                  <label htmlFor="title">Book Title</label>
+                  <label htmlFor="title">Titre du Livre</label>
                   <input
                     type="text"
                     id="title"
                     name="title"
-                    placeholder="Title"
+                    placeholder="Titre"
                     value={data.title}
                     onChange={this.onChange}
                   />
@@ -100,7 +100,7 @@ class BookForm extends React.Component {
                 </Form.Field>
 
                 <Form.Field error={!!errors.authors}>
-                  <label htmlFor="authors">Book Authors</label>
+                  <label htmlFor="authors">Auteur du livre</label>
                   <input
                     type="text"
                     id="authors"
@@ -130,14 +130,14 @@ class BookForm extends React.Component {
                 <Image size="small" src={data.cover} />
                 {this.state.covers.length > 1 && (
                   <a role="button" tabIndex={0} onClick={this.changeCover}>
-                    Another cover
+                    Couverture alternative
                   </a>
                 )}
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
-              <Button primary>Sauvegarder dans ma bibliothèque</Button>
+              <Button primary>Sauvegarder</Button>
             </Grid.Row>
           </Grid>
         </Form>

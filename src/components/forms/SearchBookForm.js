@@ -51,7 +51,7 @@ class SearchBookForm extends React.Component {
         <Dropdown
           search
           fluid
-          placeholder="Search for a book by title"
+          placeholder="Rechercher un livre grâce à son titre"
           value={this.state.query}
           onSearchChange={this.onSearchChange}
           options={this.state.options}

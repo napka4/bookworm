@@ -34,8 +34,8 @@ class LoginForm extends React.Component {
 
   validate = data => {
     const errors = {};
-    if (!Validator.isEmail(data.email)) errors.email = "Email non valide";
-    if (!data.password) errors.password = "Ce champs ne doit pas être laissé vide !";
+    if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
+    if (!data.password) errors.password = "Can't be blank";
     return errors;
   };
 
@@ -46,7 +46,7 @@ class LoginForm extends React.Component {
       <Form onSubmit={this.onSubmit} loading={loading}>
         {errors.global && (
           <Message negative>
-            <Message.Header>Il y a quelque chose qui a mal tourné :( mais quoi?</Message.Header>
+            <Message.Header>Something went wrong</Message.Header>
             <p>{errors.global}</p>
           </Message>
         )}
@@ -68,13 +68,13 @@ class LoginForm extends React.Component {
             type="password"
             id="password"
             name="password"
-            placeholder="motdepassedelamortquitue"
+            placeholder="Make it secure"
             value={data.password}
             onChange={this.onChange}
           />
           {errors.password && <InlineError text={errors.password} />}
         </Form.Field>
-        <Button primary>Login</Button>
+        <Button primary>Se connecter</Button>
       </Form>
     );
   }

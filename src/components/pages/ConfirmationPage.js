@@ -26,7 +26,7 @@ class ConfirmationPage extends React.Component {
         {loading && (
           <Message icon>
             <Icon name="circle notched" loading />
-            <Message.Header>Email en cours de validation</Message.Header>
+            <Message.Header>Validating your email</Message.Header>
           </Message>
         )}
 
@@ -36,9 +36,9 @@ class ConfirmationPage extends React.Component {
             <Icon name="checkmark" />
             <Message.Content>
               <Message.Header>
-                Merci votre compte a été vérifié !
+                Thank you. Your account has been verified.
               </Message.Header>
-              <Link to="/dashboard">Allez à votre tableau de bord</Link>
+              <Link to="/dashboard">Go to your dashboard</Link>
             </Message.Content>
           </Message>
         )}
@@ -48,7 +48,7 @@ class ConfirmationPage extends React.Component {
           <Message negative icon>
             <Icon name="warning sign" />
             <Message.Content>
-              <Message.Header>Ooops. Token invalide</Message.Header>
+              <Message.Header>Ooops. Invalid token it seems.</Message.Header>
             </Message.Content>
           </Message>
         )}

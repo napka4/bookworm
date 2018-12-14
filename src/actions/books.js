@@ -1,9 +1,14 @@
 import { normalize } from "normalizr";
-import { BOOKS_FETCHED, BOOK_CREATED } from "../types";
+import { SEARCH_BOOKS, BOOKS_FETCHED, BOOK_CREATED, BOOK_DELETED } from "../types";
 import api from "../api";
 import { bookSchema } from "../schemas";
 
 // data.entities.books
+const searchBookResults = searchResults => ({
+  type: SEARCH_BOOKS,
+  searchResults
+});
+
 const booksFetched = data => ({
   type: BOOKS_FETCHED,
   data
@@ -14,6 +19,19 @@ const bookCreated = data => ({
   data
 });
 
+const bookDeleted = results => ({
+  type: BOOK_DELETED,
+  results
+});
+
+export const search = ({ query }) => () => api.books.search(query);
+
+export const searchBooks = query => dispatch => {
+  api.books.search(query).then(books => {
+    dispatch(searchBookResults(books));
+  });
+};
+
 export const fetchBooks = () => dispatch =>
   api.books
     .fetchAll()
@@ -22,4 +40,9 @@ export const fetchBooks = () => dispatch =>
 export const createBook = data => dispatch =>
   api.books
     .create(data)
-.then(book => dispatch(bookCreated(normalize(book, bookSchema))));
+    .then(book => dispatch(bookCreated(normalize(book, bookSchema))));
+
+export const deleteBook = data => dispatch =>
+api.books
+.delete(data)
+.then(() => dispatch(bookDeleted(data)));
