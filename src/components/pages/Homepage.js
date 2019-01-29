@@ -11,7 +11,7 @@ const HomePage = ({ isAuthenticated, logout }) => (
       <button onClick={() => logout()}>Logout</button>
     ) : (
       <div>
-        <Link to="/login">Se connecter</Link> ou <Link to="/signup">S'enregistrer'</Link>
+        <Link to="/login">Se connecter</Link> ou <Link to="/signup">S'enregistrer</Link>
       </div>
     )}
   </div>

@@ -17,6 +17,9 @@ const TopNavigation = ({ user, logout, hasBooks }) => (
         Ajouter un nouveau livre
       </Menu.Item>
     )}
+    <Menu.Item as={Link} to="/lists/new">
+      Ajouter une nouvelle liste de lecture
+    </Menu.Item>
 
     <Menu.Menu position="right">
       <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)} />}>

@@ -71,9 +71,9 @@ class BookForm extends React.Component {
 
   validate = data => {
     const errors = {};
-    if (!data.title) errors.title = "Can't be blank";
-    if (!data.authors) errors.authors = "Can't be blank";
-    if (!data.pages) errors.pages = "Can't be blank";
+    if (!data.title) errors.title = "Ne peut être laissé vide";
+    if (!data.authors) errors.authors = "Ne peut être laissé vide";
+    if (!data.pages) errors.pages = "Ne peut être laissé vide";
     return errors;
   };
 

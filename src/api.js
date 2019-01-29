@@ -19,5 +19,12 @@ export default {
     fetchAll: () => axios.get("/api/books").then(res => res.data.books),
     create: book =>
       axios.post("/api/books", { book }).then(res => res.data.book)
+  },
+  lists: {
+    fetchAll: () => axios.get("/api/lists").then(res => res.data.lists),
+    create: list => (() => {
+      console.log(list)
+      axios.post("/api/lists", { list }).then(res => console.log(res.data.list) )
+    })
   }
 };

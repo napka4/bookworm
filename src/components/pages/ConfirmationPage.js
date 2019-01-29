@@ -26,7 +26,7 @@ class ConfirmationPage extends React.Component {
         {loading && (
           <Message icon>
             <Icon name="circle notched" loading />
-            <Message.Header>Validating your email</Message.Header>
+            <Message.Header>Validation de votre email</Message.Header>
           </Message>
         )}
 
@@ -36,7 +36,7 @@ class ConfirmationPage extends React.Component {
             <Icon name="checkmark" />
             <Message.Content>
               <Message.Header>
-                Thank you. Your account has been verified.
+                Merci votre compte a été vérifier.
               </Message.Header>
               <Link to="/dashboard">Go to your dashboard</Link>
             </Message.Content>

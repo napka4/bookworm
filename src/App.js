@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
-import HomePage from "./components/pages/HomePage";
+import HomePage from "./components/pages/Homepage";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import SignupPage from "./components/pages/SignupPage";
@@ -10,6 +10,7 @@ import ConfirmationPage from "./components/pages/ConfirmationPage";
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import NewBookPage from "./components/pages/NewBookPage";
+import NewListPage from "./components/pages/NewListPage";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import TopNavigation from "./components/navigation/TopNavigation";
@@ -54,6 +55,12 @@ const App = ({ location, isAuthenticated }) => (
       path="/books/new"
       exact
       component={NewBookPage}
+    />
+    <UserRoute
+      location={location}
+      path="/lists/new"
+      exact
+      component={NewListPage}
     />
   </div>
 );
