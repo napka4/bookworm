@@ -31,11 +31,9 @@ export const fetchLists = () => dispatch =>
 export const createList = data => dispatch =>
   api.lists
     .create(data)
-    .then(list => dispatch(listCreated(normalize(list, listSchema))))
-    .catch((err)=>console.log(err))
-    ;
+    .then(list => dispatch(listCreated(normalize(list, listSchema))));
 
 export const deleteList = data => dispatch =>
-api.lists
-.delete(data)
-.then(() => dispatch(listDeleted(data)));
+  api.lists
+    .delete(data)
+    .then(() => dispatch(listDeleted(data)));

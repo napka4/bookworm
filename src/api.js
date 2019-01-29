@@ -22,9 +22,7 @@ export default {
   },
   lists: {
     fetchAll: () => axios.get("/api/lists").then(res => res.data.lists),
-    create: list => (() => {
-      console.log(list)
-      axios.post("/api/lists", { list }).then(res => console.log(res.data.list) )
-    })
+    create: list =>
+      axios.post("/api/lists", list).then(res => res.data.list)
   }
 };

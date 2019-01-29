@@ -6,7 +6,7 @@ import InlineError from "../messages/InlineError";
 class ListForm extends React.Component {
   state = {
     data: {
-      title: this.props.list.title,
+      title: this.props.list.title
     },
     loading: false,
     errors: {}
