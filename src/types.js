@@ -6,4 +6,5 @@ export const BOOK_CREATED = "bookCreated";
 export const BOOK_DELETED = "bookDeleted";
 export const LISTS_FETCHED = "listsFetched";
 export const LIST_CREATED = "listCreated";
+export const LIST_UPDATED = "listUpdated";
 export const LIST_DELETED = "listDeleted";

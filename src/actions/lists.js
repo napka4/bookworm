@@ -1,20 +1,24 @@
 import { normalize } from "normalizr";
-import { LISTS_FETCHED, LIST_CREATED, LIST_DELETED } from "../types";
+import { LISTS_FETCHED, LIST_CREATED, LIST_DELETED, LIST_UPDATED } from "../types";
 import api from "../api";
 import { listSchema } from "../schemas";
 
 // data.entities.books
 
 const listsFetched = (data => {
-  console.log(data);
   return {
-  type: LISTS_FETCHED,
-  data
-}
+    type: LISTS_FETCHED,
+    data
+  }
 });
 
 const listCreated = data => ({
   type: LIST_CREATED,
+  data
+});
+
+const listUpdated = data => ({
+  type: LIST_UPDATED,
   data
 });
 
@@ -32,6 +36,11 @@ export const createList = data => dispatch =>
   api.lists
     .create(data)
     .then(list => dispatch(listCreated(normalize(list, listSchema))));
+
+export const updateList = data => dispatch =>
+  api.lists
+    .update(data)
+    .then(list => dispatch(listUpdated(normalize(list, listSchema))));
 
 export const deleteList = data => dispatch =>
   api.lists

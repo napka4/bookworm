@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { LISTS_FETCHED, LIST_CREATED, LIST_DELETED } from "../types";
+import { LISTS_FETCHED, LIST_CREATED, LIST_DELETED, LIST_UPDATED } from "../types";
 
 const deleteProperty = (key, obj) => {
   const { [key]: deletedItem, ...rest } = obj;
@@ -9,9 +9,12 @@ const deleteProperty = (key, obj) => {
 export default function lists(state = {}, action = {}) {
   switch (action.type) {
     case LISTS_FETCHED:
+      return { ...state, ...action.data.entities.lists };
     case LIST_CREATED:
       return { ...state, ...action.data.entities.lists };
-      case LIST_DELETED:
+    case LIST_UPDATED:
+      return { ...state, ...action.data.entities.lists };
+    case LIST_DELETED:
       return deleteProperty(action.results, state);
     default:
       return state;

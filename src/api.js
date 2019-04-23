@@ -16,13 +16,21 @@ export default {
     resetPassword: data => axios.post("/api/auth/reset_password", { data })
   },
   books: {
-    fetchAll: () => axios.get("/api/books").then(res => res.data.books),
+    fetchAll: () => 
+      axios.get("/api/books").then(res => res.data.books),
     create: book =>
-      axios.post("/api/books", { book }).then(res => res.data.book)
+      axios.post("/api/books", { book }).then(res => res.data.book),
+    delete: book => 
+      axios.delete(`/api/books`,{ book }).then(res => res.data.book),
   },
   lists: {
-    fetchAll: () => axios.get("/api/lists").then(res => res.data.lists),
+    fetchAll: () => 
+      axios.get("/api/lists").then(res => res.data.lists),
     create: list =>
-      axios.post("/api/lists", list).then(res => res.data.list)
+      axios.post("/api/lists", list).then(res => res.data.list),
+    update: list =>
+      axios.put("/api/lists", list).then(res => res.data.list),
+    delete: list => 
+      axios.delete(`/api/lists`,{ list }).then(res => res.data.list),
   }
 };

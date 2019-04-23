@@ -43,6 +43,6 @@ export const createBook = data => dispatch =>
     .then(book => dispatch(bookCreated(normalize(book, bookSchema))));
 
 export const deleteBook = data => dispatch =>
-api.books
-.delete(data)
-.then(() => dispatch(bookDeleted(data)));
+  api.books
+    .delete(data)
+    .then(() => dispatch(bookDeleted(data)));

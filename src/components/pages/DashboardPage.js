@@ -7,35 +7,81 @@ import { allListsSelector } from "../../reducers/lists";
 import AddBookCtA from "../ctas/AddBookCta";
 import AddListCtA from "../ctas/AddListCta";
 import { fetchBooks, deleteBook } from "../../actions/books";
-import { fetchLists, deleteList } from "../../actions/lists";
+import { fetchLists, deleteList, updateList } from "../../actions/lists";
 import BookItem from '../display/BookItem';
 import ListItem from "../display/ListItem";
-import { Card } from "semantic-ui-react";
+import { Card, Button, Modal } from "semantic-ui-react";
 
 class DashboardPage extends React.Component {
-  componentDidMount = () => this.props.fetchBooks();
+  state = { 
+    open: false, 
+    editableList: {} 
+  }
 
-  onInitList = props => props.fetchLists();
+  componentDidMount = () => {
+    this.props.fetchBooks();
+    this.props.fetchLists();
+  }
 
   onDelete = book => {
     this.props.deleteBook(book._id);
-    }
+  }
 
   onDeleteList = list => {
     this.props.deleteList(list._id);
-}
+  }
 
-removeBook = id => 
-this.state.books.filter(book => book._id !== id);
+  onEditList = (list, status = false) => {
+    this.setState({ editableList: list });
+    if (status) this.props.updateList(list);
+    else this.setState({ open: true });
+  }
 
-removeList = id =>
-this.state.lists.filter(list => list._id !== id);
+  removeBook = id => 
+    this.props.books.filter(book => book._id !== id);
+
+  removeList = id =>
+    this.props.lists.filter(list => list._id !== id);
+
+  editList = id => {
+    this.props.lists.filter(list => list._id !== id); 
+  }
+
+  closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
+    this.setState({ closeOnEscape, closeOnDimmerClick, open: true })
+  }
+
+  close = () => this.setState({ open: false })
 
   render() {
     const { isConfirmed, books, lists } = this.props;
     return (
       <div>
         {!isConfirmed && <ConfirmEmailMessage />}
+
+        <Modal
+          open={this.state.open}
+          closeOnEscape={this.closeOnEscape}
+          closeOnDimmerClick={this.closeOnDimmerClick}
+          onClose={this.close}
+        >
+          <Modal.Header>Modifier</Modal.Header>
+          <Modal.Content>
+            <p>Are you sure you want to delete your account</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={this.close} negative>
+              No
+            </Button>
+            <Button
+              onClick={this.editList(this.state.editableList, true)}
+              positive
+              labelPosition='right'
+              icon='checkmark'
+              content='Yes'
+            />
+          </Modal.Actions>
+        </Modal>
 
         {books.length === 0 ? (
         <AddBookCtA /> 
@@ -51,8 +97,8 @@ this.state.lists.filter(list => list._id !== id);
         <AddListCtA /> 
         ) : (
           <Card.Group >
-            {lists.map((list) => 
-              <ListItem key={list._id} list={list} removeList={this.onDeleteList} />
+            {lists.map((list) => (
+              <ListItem key={list._id} list={list} removeList={this.onDeleteList} editList={this.onEditList} />)
             )}
           </Card.Group>
         )}
@@ -65,7 +111,9 @@ this.state.lists.filter(list => list._id !== id);
 DashboardPage.propTypes = {
   isConfirmed: PropTypes.bool.isRequired,
   fetchBooks: PropTypes.func.isRequired,
-  deleteBook: PropTypes.func.isRequired,
+  fetchLists: PropTypes.func.isRequired,
+  deleteBook: PropTypes.func.isRequired,   
+  updateList: PropTypes.func.isRequired, 
   books: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired
@@ -73,7 +121,7 @@ DashboardPage.propTypes = {
   ).isRequired,
   lists: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired
+      title: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired
 };
@@ -82,8 +130,8 @@ function mapStateToProps(state) {
   return {
     isConfirmed: !!state.user.confirmed,
     books: allBooksSelector(state),
-    lists: allListsSelector(state)
+    lists: allListsSelector(state),
   };
 }
 
-export default connect(mapStateToProps, { fetchBooks, deleteBook, fetchLists, deleteList })(DashboardPage);
+export default connect(mapStateToProps, { fetchBooks, deleteBook, fetchLists, updateList, deleteList })(DashboardPage);

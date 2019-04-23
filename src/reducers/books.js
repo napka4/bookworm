@@ -11,7 +11,7 @@ export default function books(state = {}, action = {}) {
     case BOOKS_FETCHED:
     case BOOK_CREATED:
       return { ...state, ...action.data.entities.books };
-      case BOOK_DELETED:
+      case BOOK_DELETED:console.log(action)
       return deleteProperty(action.results, state);
     case SEARCH_BOOKS:
     return action.searchResults;
