@@ -10,12 +10,13 @@ import { fetchBooks, deleteBook } from "../../actions/books";
 import { fetchLists, deleteList, updateList } from "../../actions/lists";
 import BookItem from '../display/BookItem';
 import ListItem from "../display/ListItem";
-import { Card, Button, Modal } from "semantic-ui-react";
+import { Card, Button, Modal, Input } from "semantic-ui-react";
 
 class DashboardPage extends React.Component {
   state = { 
     open: false, 
-    editableList: {} 
+    editableList: {} ,
+    editableTitle: '',
   }
 
   componentDidMount = () => {
@@ -31,10 +32,17 @@ class DashboardPage extends React.Component {
     this.props.deleteList(list._id);
   }
 
-  onEditList = (list, status = false) => {
+  onEditList = (list, status) => {
     this.setState({ editableList: list });
-    if (status) this.props.updateList(list);
-    else this.setState({ open: true });
+    console.log(status);
+    if (status) {
+      const newList = {...list, title: this.state.editableTitle};
+      this.setState({editableTitle:''});
+      this.props.updateList(newList);
+      this.close();
+    }else {
+      this.setState({ open: true, editableTitle:list.title });
+    }
   }
 
   removeBook = id => 
@@ -51,37 +59,16 @@ class DashboardPage extends React.Component {
     this.setState({ closeOnEscape, closeOnDimmerClick, open: true })
   }
 
+  show = size => () => this.setState({ size, open: true })
   close = () => this.setState({ open: false })
 
   render() {
-    const { isConfirmed, books, lists } = this.props;
+    const { isConfirmed, books, lists} = this.props;
     return (
       <div>
         {!isConfirmed && <ConfirmEmailMessage />}
 
-        <Modal
-          open={this.state.open}
-          closeOnEscape={this.closeOnEscape}
-          closeOnDimmerClick={this.closeOnDimmerClick}
-          onClose={this.close}
-        >
-          <Modal.Header>Modifier</Modal.Header>
-          <Modal.Content>
-            <p>Are you sure you want to delete your account</p>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button onClick={this.close} negative>
-              No
-            </Button>
-            <Button
-              onClick={this.editList(this.state.editableList, true)}
-              positive
-              labelPosition='right'
-              icon='checkmark'
-              content='Yes'
-            />
-          </Modal.Actions>
-        </Modal>
+        
 
         {books.length === 0 ? (
         <AddBookCtA /> 
@@ -102,7 +89,32 @@ class DashboardPage extends React.Component {
             )}
           </Card.Group>
         )}
-
+        <Modal
+          size="mini"
+          style={styles.modalStyle}
+          open={this.state.open}
+          closeOnEscape={this.closeOnEscape}
+          closeOnDimmerClick={this.closeOnDimmerClick}
+          onClose={this.close}
+        >
+          <Modal.Header>Modifier le titre de la liste</Modal.Header>
+          <Modal.Content>
+            <Input focus value={this.state.editableTitle} onChange={(e,data) => this.setState({editableTitle: data.value})}/>
+            <p>Etes-vous d'accord avec la modification?</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={this.close} negative>
+              Non
+            </Button>
+            <Button
+              onClick={() => this.onEditList(this.state.editableList, true)}
+              positive
+              labelPosition='right'
+              icon='checkmark'
+              content='Oui'
+            />
+          </Modal.Actions>
+        </Modal>
       </div>
     );
   }
@@ -135,3 +147,10 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchBooks, deleteBook, fetchLists, updateList, deleteList })(DashboardPage);
+const styles = {
+  modalStyle: {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  }
+}

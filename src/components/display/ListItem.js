@@ -10,7 +10,7 @@ const ListItem = ({ list, removeList, editList }) => {
           <Card.Header>
             {list.title}
           </Card.Header>
-          <Button floated="right" color="blue" circular icon="edit" onClick={() => editList(list) } />
+          <Button floated="right" color="blue" circular icon="edit" onClick={() => editList(list, false) } />
           <Button floated="right" color="red" circular icon="trash" onClick={() => removeList(list)} />
         </Card.Content>
       </Card>
