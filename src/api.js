@@ -7,13 +7,13 @@ export default {
     signup: user =>
       axios.post("/api/users", { user }).then(res => res.data.user),
     confirm: token =>
-      axios
-        .post("/api/auth/confirmation", { token })
-        .then(res => res.data.user),
+      axios.post("/api/auth/confirmation", { token }).then(res => res.data.user),
     resetPasswordRequest: email =>
       axios.post("/api/auth/reset_password_request", { email }),
-    validateToken: token => axios.post("/api/auth/validate_token", { token }),
-    resetPassword: data => axios.post("/api/auth/reset_password", { data })
+    validateToken: token => 
+      axios.post("/api/auth/validate_token", { token }),
+    resetPassword: data =>
+      axios.post("/api/auth/reset_password", { data })
   },
   books: {
     fetchAll: () => 
@@ -32,5 +32,13 @@ export default {
       axios.put("/api/lists", list).then(res => res.data.list),
     delete: list => 
       axios.delete(`/api/lists`,{ list }).then(res => res.data.list),
+  },
+  booksOnList: {
+    getByListId: list =>
+      axios.get("/api/books-on-list", { list }).then(res => res.data.lists),
+    create: (list, book) =>
+      axios.post("/api/books-on-list", { list, book }).then(res => res.data),
+    delete: (list, book) =>
+      axios.delete("/api/books-on-list", { list, book }).then(res => res.data.result),
   }
 };
