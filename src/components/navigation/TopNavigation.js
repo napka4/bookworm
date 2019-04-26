@@ -8,7 +8,7 @@ import * as actions from "../../actions/auth";
 import { allBooksSelector } from "../../reducers/books";
 
 const TopNavigation = ({ user, logout, hasBooks }) => (
-  <Menu secondary pointing>
+  <Menu style={{ paddingTop: 10 }} secondary pointing>
     <Menu.Item as={Link} to="/dashboard">
       Mon Board
     </Menu.Item>
