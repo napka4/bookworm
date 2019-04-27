@@ -40,7 +40,7 @@ export default {
       axios.get("/api/books-on-list", { list }).then(res => res.data),
     create: (list, book) =>
       axios.post("/api/books-on-list", { list, book }).then(res => res.data),
-    delete: (list, book) =>
-      axios.delete("/api/books-on-list", { list, book }).then(res => res.data.result),
+    delete: (listId, bookId) =>
+      axios.delete("/api/books-on-list", { listId, bookId }).then(res => res.data.result),
   }
 };

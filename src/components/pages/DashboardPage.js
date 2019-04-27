@@ -67,6 +67,13 @@ class DashboardPage extends React.Component {
     }
   }
 
+  onDeleteBookOnList = (list, book) => {
+    const listId = list._id;
+    const bookId = book._id;
+    this.props.deleteBookOnList(listId, bookId);
+    this.props.fetchAllWithBooks();
+  }
+
   setSelectedList = (list) =>
     this.setState({ selectedList: list });
 
@@ -112,10 +119,11 @@ class DashboardPage extends React.Component {
           <Card.Group>
             {lists.map((list) =>
               <ListItem 
-                key={list._id} 
+                key={list._id}
                 list={list}
+                editList={this.onEditList}
                 removeList={this.onDeleteList} 
-                editList={this.onEditList} />
+                removeBookOnList={this.onDeleteBookOnList} />
             )}
           </Card.Group>
         )}

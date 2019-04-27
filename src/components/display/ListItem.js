@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "semantic-ui-react";
 
-const ListItem = ({ list, removeList, editList }) => {
+const ListItem = ({ list, removeList, removeBookOnList, editList }) => {
   return (
     <div>
       <Card color="teal">
@@ -17,6 +17,7 @@ const ListItem = ({ list, removeList, editList }) => {
           list.books.map((book, index) => (
             <Card.Content key={index}>
               { book.title }
+              <Button floated="right" color="red" circular icon="trash" onClick={() => removeBookOnList(list, book)} />
             </Card.Content>
           ))
         }
@@ -30,6 +31,7 @@ ListItem.propTypes = {
     title: PropTypes.string.isRequired,
   }).isRequired,
   removeList: PropTypes.func.isRequired,
+  removeBookOnList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired
 };
 
