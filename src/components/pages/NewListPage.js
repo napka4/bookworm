@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Segment } from "semantic-ui-react";
-import axios from "axios";
 import ListForm from "../forms/ListForm";
-import SearchBookForm from "../forms/SearchBookForm";
 import { createList } from "../../actions/lists";
 
 class NewListPage extends React.Component {
@@ -12,7 +10,7 @@ class NewListPage extends React.Component {
     list: {
       title: "truc"
     }
-  };
+};
 
 //récupérer le titre de la iste créée et l'ajouter
 

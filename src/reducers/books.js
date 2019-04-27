@@ -9,12 +9,13 @@ const deleteProperty = (key, obj) => {
 export default function books(state = {}, action = {}) {
   switch (action.type) {
     case BOOKS_FETCHED:
+      return { ...state, ...action.data.entities.books };
     case BOOK_CREATED:
       return { ...state, ...action.data.entities.books };
-      case BOOK_DELETED:console.log(action)
+    case BOOK_DELETED:
       return deleteProperty(action.results, state);
     case SEARCH_BOOKS:
-    return action.searchResults;
+      return action.searchResults;
     default:
       return state;
   }

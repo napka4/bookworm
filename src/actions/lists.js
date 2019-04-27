@@ -1,5 +1,5 @@
 import { normalize } from "normalizr";
-import { LISTS_FETCHED, LIST_CREATED, LIST_DELETED, LIST_UPDATED } from "../types";
+import { LISTS_FETCHED, LISTS_FETCHEDWITHBOOKS, LIST_CREATED, LIST_DELETED, LIST_UPDATED } from "../types";
 import api from "../api";
 import { listSchema } from "../schemas";
 
@@ -8,6 +8,13 @@ import { listSchema } from "../schemas";
 const listsFetched = (data => {
   return {
     type: LISTS_FETCHED,
+    data
+  }
+});
+
+const listsFetchedWithBooks = (data => {
+  return {
+    type: LISTS_FETCHEDWITHBOOKS,
     data
   }
 });
@@ -31,6 +38,11 @@ export const fetchLists = () => dispatch =>
   api.lists
     .fetchAll()
     .then(lists => dispatch(listsFetched(normalize(lists, [listSchema]))));
+
+export const fetchAllWithBooks = () => dispatch =>
+  api.lists
+    .fetchAllWithBooks()
+    .then(lists => dispatch(listsFetchedWithBooks(lists)));
 
 export const createList = data => dispatch =>
   api.lists

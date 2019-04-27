@@ -26,6 +26,8 @@ export default {
   lists: {
     fetchAll: () => 
       axios.get("/api/lists").then(res => res.data.lists),
+    fetchAllWithBooks: () => 
+      axios.get("/api/lists/with-books").then(res => res.data),
     create: list =>
       axios.post("/api/lists", list).then(res => res.data.list),
     update: list =>
@@ -35,7 +37,7 @@ export default {
   },
   booksOnList: {
     getByListId: list =>
-      axios.get("/api/books-on-list", { list }).then(res => res.data.lists),
+      axios.get("/api/books-on-list", { list }).then(res => res.data),
     create: (list, book) =>
       axios.post("/api/books-on-list", { list, book }).then(res => res.data),
     delete: (list, book) =>

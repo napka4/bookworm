@@ -7,22 +7,29 @@ import { allListsSelector } from "../../reducers/lists";
 import AddBookCtA from "../ctas/AddBookCta";
 import AddListCtA from "../ctas/AddListCta";
 import { fetchBooks, deleteBook } from "../../actions/books";
-import { fetchLists, deleteList, updateList } from "../../actions/lists";
+import { fetchLists, fetchAllWithBooks, deleteList, updateList } from "../../actions/lists";
+import { createBookOnList, deleteBookOnList } from "../../actions/bookOnList";
 import BookItem from '../display/BookItem';
 import ListItem from '../display/ListItem';
-import ListModal from "../display/ListModal";
-import { Card, Button, Modal, Input } from "semantic-ui-react";
+import ListEditModal from "../display/ListEditModal";
+import BookOnListModal from "../display/BookOnListModal";
+import { Card } from "semantic-ui-react";
 
 class DashboardPage extends React.Component {
   state = { 
-    open: false, 
-    editableList: {} ,
+    openModalList: false, 
+    openModalBooksOnList: false, 
+    selectedBookOnList: {},
+    booksOnList: [],
+    selectedList: {},
+    editableList: {},
     editableTitle: '',
   }
 
   componentDidMount = () => {
     this.props.fetchBooks();
-    this.props.fetchLists();
+    // this.props.fetchLists();
+    this.props.fetchAllWithBooks();
   }
 
   onDelete = book => {
@@ -35,19 +42,33 @@ class DashboardPage extends React.Component {
 
   onEditList = (list, status) => {
     this.setState({ editableList: list });
+
     if (status) {
-      const newList = {...list, title: this.state.editableTitle};
-      this.setState({editableTitle:''});
+      const newList = { ...list, title: this.state.editableTitle };
+      this.setState({ editableTitle: '' });
       this.props.updateList(newList);
-      this.close();
+      this.closeModalList();
     } else {
-      this.setState({ open: true, editableTitle:list.title });
+      this.setState({ openModalList: true, editableTitle: list.title });
     }
   }
 
-  onAddBookOnList = book => {
-    console.log(book);
+  onAddBookOnList = (book, status = false) => {
+    this.setState({ selectedBookOnList: book });
+
+    if (status) {
+      const newBookOnList = { book, list: this.state.selectedList };
+      this.setState({ selectedBookOnList: {}, selectedList: {} });
+      this.props.createBookOnList(newBookOnList);
+      this.closeModalBookOnList();
+      this.props.fetchAllWithBooks();
+    } else {
+      this.setState({ openModalBooksOnList: true, selectedList: {} });
+    }
   }
+
+  setSelectedList = (list) =>
+    this.setState({ selectedList: list });
 
   removeBook = id => 
     this.props.books.filter(book => book._id !== id);
@@ -58,14 +79,11 @@ class DashboardPage extends React.Component {
   editList = id =>
     this.props.lists.filter(list => list._id !== id);
 
-  closeConfigShow = () =>
-    this.setState({ open: true });
+  closeModalList = () =>
+    this.setState({ openModalList: false });
 
-  show = size => () => 
-    this.setState({ size, open: true });
-
-  close = () =>
-    this.setState({ open: false });
+  closeModalBookOnList = () =>
+    this.setState({ openModalBooksOnList: false });
 
   render() {
     const { isConfirmed, books, lists} = this.props;
@@ -79,7 +97,11 @@ class DashboardPage extends React.Component {
         ) : (
           <Card.Group>
             {books.map((book) => 
-              <BookItem key={book._id} book={book} removeBook={this.onDelete} addBookOnList={this.onAddBookOnList} />
+              <BookItem 
+                key={book._id}
+                book={book} 
+                removeBook={this.onDelete} 
+                addBookOnList={this.onAddBookOnList} />
             )}
           </Card.Group>
         )}
@@ -88,13 +110,32 @@ class DashboardPage extends React.Component {
         <AddListCtA /> 
         ) : (
           <Card.Group>
-            {lists.map((list) => (
-              <ListItem key={list._id} list={list} removeList={this.onDeleteList} editList={this.onEditList} />)
+            {lists.map((list) =>
+              <ListItem 
+                key={list._id} 
+                list={list}
+                removeList={this.onDeleteList} 
+                editList={this.onEditList} />
             )}
           </Card.Group>
         )}
 
-        <ListModal list={this.state.editableList} title={this.state.editableTitle} setTitle={(data) => this.setState(data)} onEditList={this.onEditList} close={this.close} isOpen={this.state.open} />
+        <ListEditModal 
+          close={this.closeModalList} 
+          onEditList={this.onEditList} 
+          list={this.state.editableList} 
+          title={this.state.editableTitle} 
+          setTitle={(data) => this.setState(data)} 
+          isOpen={this.state.openModalList} />
+        
+        <BookOnListModal 
+          lists={lists}
+          setSelectedList={this.setSelectedList}
+          selectedList={this.state.selectedList}
+          book={this.state.selectedBookOnList}
+          close={this.closeModalBookOnList}
+          onAddBookOnList={this.onAddBookOnList}
+          isOpen={this.state.openModalBooksOnList} />
       </div>
     );
   }
@@ -104,8 +145,11 @@ DashboardPage.propTypes = {
   isConfirmed: PropTypes.bool.isRequired,
   fetchBooks: PropTypes.func.isRequired,
   fetchLists: PropTypes.func.isRequired,
+  fetchAllWithBooks: PropTypes.func.isRequired,
   deleteBook: PropTypes.func.isRequired,   
   updateList: PropTypes.func.isRequired, 
+  createBookOnList: PropTypes.func.isRequired, 
+  deleteBookOnList: PropTypes.func.isRequired, 
   books: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired
@@ -126,4 +170,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchBooks, deleteBook, fetchLists, updateList, deleteList })(DashboardPage);
+export default connect(mapStateToProps, { fetchBooks, deleteBook, fetchLists, fetchAllWithBooks, updateList, deleteList, createBookOnList, deleteBookOnList })(DashboardPage);

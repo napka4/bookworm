@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Modal, Button, Input } from "semantic-ui-react";
 
-const ListModal = ({ list, onEditList, close, isOpen, title, setTitle }) => {
+const ListEditModal = ({ list, onEditList, close, isOpen, title, setTitle }) => {
     const styles = {
         modalStyle: {
             top: '50%',
@@ -26,21 +26,21 @@ const ListModal = ({ list, onEditList, close, isOpen, title, setTitle }) => {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button onClick={() => close()} negative>
-                        Non
+                        Annuler
                     </Button>
                     <Button
                         onClick={() => onEditList(list, true)}
                         positive
                         labelPosition="right"
                         icon="checkmark"
-                        content="Oui" />
+                        content="Modifier" />
                 </Modal.Actions>
             </Modal>
         </div>
     );
 };
 
-ListModal.propTypes = {
+ListEditModal.propTypes = {
   list: PropTypes.shape().isRequired,
   onEditList: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -49,4 +49,4 @@ ListModal.propTypes = {
   setTitle: PropTypes.func.isRequired,
 };
 
-export default ListModal;
+export default ListEditModal;

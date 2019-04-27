@@ -11,3 +11,9 @@ export const listSchema = new schema.Entity(
   {},
   { idAttribute: "_id" }
 );
+
+export const bookOnListSchema = new schema.Entity(
+  "bookOnList",
+  {},
+  { idAttribute: "_id" }
+);

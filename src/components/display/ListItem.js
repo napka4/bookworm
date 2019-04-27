@@ -13,6 +13,13 @@ const ListItem = ({ list, removeList, editList }) => {
           <Button floated="right" color="blue" circular icon="edit" onClick={() => editList(list, false) } />
           <Button floated="right" color="red" circular icon="trash" onClick={() => removeList(list)} />
         </Card.Content>
+        { 
+          list.books.map((book, index) => (
+            <Card.Content key={index}>
+              { book.title }
+            </Card.Content>
+          ))
+        }
       </Card>
     </div>
   );
